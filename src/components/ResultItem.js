@@ -137,8 +137,8 @@ class ResultItem extends Component {
     super(props);
 
     this.state = {
-      connectionURL: "http://127.0.0.1:9000",
-      // connectionURL: "http://10.108.20.4:9000",
+      // connectionURL: "http://192.168.2.108:9000",
+      connectionURL: "http://10.108.20.4:9000",
       // connectionURL: "https://dsbox02.isi.edu:9000",
       index: 0,
       dmId: "",
@@ -264,6 +264,7 @@ class ResultItem extends Component {
 
           console.log("suppliedData type is", suppliedDataType);
           if (suppliedDataType === "string") {
+            console.log("append string as supplied data");
             url += "data=";
             url += this.state.suppliedData;
             url += "&format=csv";
@@ -276,7 +277,8 @@ class ResultItem extends Component {
           // create FormData
           var formData = new FormData();
           // add supplied data in file if the supplied data is from upload
-          if (suppliedDataType === "text/csv") {
+          if (suppliedDataType !== "string") {
+            console.log("append data as supplied data");
             formData.append(
               "data",
               this.state.suppliedData
@@ -399,11 +401,12 @@ class ResultItem extends Component {
       });
     } 
     
-    console.log("Sending url as ", url)
+    console.log("Sending url as ", url);
+
     // create FormData
     var formData = new FormData();
     // add supplied data in file if the supplied data is from upload
-    if (suppliedDataType === "text/csv") {
+    if (suppliedDataType !== "string") {
       formData.append(
         "data",
         this.state.suppliedData
@@ -414,6 +417,7 @@ class ResultItem extends Component {
         "task",
         JSON.stringify(this.props.item_json)
     );
+    console.log("Sending form data as ", formData)
 
     fetch(url, {
             method: "POST",
