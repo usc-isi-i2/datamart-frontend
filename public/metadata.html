@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Meta Data</title>
+    <meta name="theme-color" content="#000000" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="jsonview.css">
+    <script src="jsonview.js"></script>
+    <!-- <script src="{{ url_for('static', filename='jquery.csv.min.js') }}"></script> -->
+
+    <script>
+      function GetRequest() {
+        var url = location.search;
+        var id = url.split("=")[1];
+        console.log("id: " + id);
+        return id;
+      }
+
+      $(function() {
+        var key = GetRequest();
+        var meta = sessionStorage.getItem(key);
+
+        // console.log("meta", meta);
+        var wrapper = document.getElementById("meta_data");
+        var tree = jsonTree.create(JSON.parse(meta), wrapper);
+        tree.expand()
+      });
+    </script>
+
+    <title>Meta Data</title>
+  </head>
+
+  <body>
+    <div id="meta_data"></div>
+  </body>
+</html>

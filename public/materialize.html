@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"/> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <style>
+
+    table
+    {
+        margin: 10px;
+        width: 98%;
+    }
+
+    .tHeder {
+      font-size: 20px;
+      font-weight: 500;
+      color: white;
+      background-color: #3f51b5;
+    }
+
+    .caption {
+      margin-bottom: 10px
+    }
+
+    .downloadBtn {
+
+    }
+    </style>
+
+    <script>
+      function GetRequest() {
+        var url = location.search;
+        var id = url.split("=")[1];
+        // console.log("id: " + id);
+        return id;
+      }
+
+      function parseCSV(data, title) {
+        // start the page
+        // start the table
+        html = "<table class='highlight centered responsive-table'><caption class='caption'><h5>" + title + "</h5><a id = 'downloadCSV' class='waves-effect waves-light btn-small'><i class='material-icons left'>cloud_download</i>Download All Data</a></caption>";
+
+        // reg data
+        var result = data.replace(/"[^"]+"/g,function(matchStr){
+          return matchStr.replace(/[\s"]+/gm,' ');
+        });
+
+        // split into lines
+        var rows = result.split("\n");
+        // console.log("rows: ", rows);
+
+        // parse lines
+        rows.some(function getvalues(ourrow, idx) {
+          // start a table row
+          if (idx == 0) {
+            html += "<thead><tr class='tHeder'>";
+             // style="background: #ffefef;"
+          }
+          else if (idx == 30) {
+            console.log("30 lines");
+            return true;
+          }
+          else {
+            html += "<tr>";
+          }
+
+
+
+          // split line into columns
+          if(ourrow) {
+            var columns = ourrow.split(",");
+            // console.log("columns: ", columns);
+            columns.forEach(function(col) {
+              if (idx == 0) {
+                html += "<th>" + col + "</th>";
+              }
+              else {
+                html += "<td>" + col + "</td>";
+              }
+            });
+          }
+
+
+          // close row
+          if (idx == 0) {
+            html += "</tr></thead>";
+             // style="background: #ffefef;"
+          } else {
+            html += "</tr>";
+          }
+        });
+        // close table
+        html += "</table>";
+        return html;
+      }
+
+      function initCsvLink(data,fileName){
+        data = "\ufeff"+data;  
+        var blob = new Blob([data], { type: 'text/csv,charset=UTF-8'});  
+        var csvUrl = URL.createObjectURL(blob);
+        var link = $("#downloadCSV");
+        link.attr("href",csvUrl); 
+        link.attr("download",fileName); 
+      }
+
+
+      $(function() {
+        var key = GetRequest();
+        var res = sessionStorage.getItem(key);
+        var data = JSON.parse(res);
+        var table = parseCSV(data['data'], data['title']);
+        var fileName =  data['title'] + ".csv";
+        document.title = data['title'];
+        $("#materialize_result").html(table);
+        initCsvLink(data['data'],fileName);
+      });
+    </script>
+    <!-- <script src="{{ url_for('static', filename='jquery.csv.min.js') }}"></script> -->
+    <title>Materialize Result</title>
+  </head>
+
+  <body>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <div id="materialize_result"></div>
+  </body>
+</html>
