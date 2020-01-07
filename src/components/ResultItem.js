@@ -260,10 +260,11 @@ class ResultItem extends Component {
         () => {
           // create url
           var url = this.state.connectionURL + "/" + actionName + "?";
-          const suppliedDataType = this.state.suppliedData.type.toString()
+          console.log("supplied data is", this.state.suppliedData);
+          const suppliedDataType = this.state.suppliedData.type;
 
           console.log("suppliedData type is", suppliedDataType);
-          if (suppliedDataType === "string") {
+          if (typeof this.state.suppliedData === 'string' || this.state.suppliedData instanceof String) {
             console.log("append string as supplied data");
             url += "data=";
             url += this.state.suppliedData;
