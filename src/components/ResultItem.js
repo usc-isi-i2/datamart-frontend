@@ -626,7 +626,7 @@ class ResultItem extends Component {
                   className={classes.buttonDownload}
                   onClick={this.handleAugmentCSV}
                   labelWidth="2000"
-                  disabled={this.state.running_augment_csv}
+                  disabled={this.state.running_augment_csv || this.state.cannotDownloadOrAugment}
                 >
                   Augment CSV
                   <CloudDownloadIcon className={classes.rightIcon} />
@@ -637,7 +637,7 @@ class ResultItem extends Component {
                   className={classes.buttonDownload}
                   onClick={this.handleAugmentD3M}
                   labelWidth="2000"
-                  disabled={this.state.running_augment_d3m}
+                  disabled={this.state.running_augment_d3m || this.state.cannotDownloadOrAugment}
                 >
                   AUGMENT D3M
                   <CloudDownloadIcon className={classes.rightIcon} />
@@ -648,7 +648,7 @@ class ResultItem extends Component {
                   className={classes.buttonDownload}
                   onClick={this.handleDownloadCSV}
                   labelWidth="2000"
-                  disabled={this.state.running_download_csv}
+                  disabled={this.state.running_download_csv || this.state.cannotDownloadOrAugment}
                 >
                   DOWNLOAD CSV
                   <CloudDownloadIcon className={classes.rightIcon} />
@@ -659,7 +659,7 @@ class ResultItem extends Component {
                   className={classes.buttonDownload}
                   onClick={this.handleDownloadD3M}
                   labelWidth="2000"
-                  disabled={this.state.running_download_d3m}
+                  disabled={this.state.running_download_d3m || this.state.cannotDownloadOrAugment}
                 >
                   DOWNLOAD D3M
                   <CloudDownloadIcon className={classes.rightIcon} />

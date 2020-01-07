@@ -321,7 +321,7 @@ class SearchPanel extends Component {
           .then(response => {
             if (!response.ok) {
               this.setState({
-                "loading": false,
+                "loading": true,
 
               })
             }
@@ -371,7 +371,8 @@ class SearchPanel extends Component {
                 document.getElementById("searchMessage").innerHTML = "Request failed, please contact administrator.";
               }
               this.setState({
-                loading: false
+                onSearching:false,
+                loading: true
               })
             });
       }
@@ -442,6 +443,7 @@ class SearchPanel extends Component {
                 margin="dense"
                 variant="outlined"
                 onChange={this.handleValChange("keywords")}
+                onKeyDown={this.keyPress}
               />
               <MouseOverPopover 
                 helpContent1 = "keywords that want the search results to match. Seprate by comma `,`"
@@ -478,6 +480,7 @@ class SearchPanel extends Component {
                 margin="dense"
                 variant="outlined"
                 onChange={this.handleValChange("maxDocsNum")}
+                onKeyDown={this.keyPress}
               />
               <FormControlLabel
                 control={
@@ -617,6 +620,7 @@ class SearchPanel extends Component {
                     margin="dense"
                     variant="outlined"
                     onChange={this.handleValChange("filepath")}
+                    onKeyDown={this.keyPress}
                   />
                 </div>:null
               }
