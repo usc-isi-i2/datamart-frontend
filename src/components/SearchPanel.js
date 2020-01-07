@@ -113,7 +113,7 @@ class SearchPanel extends Component {
 
     this.state = {
       connectionURL: "http://10.108.20.4:9000",
-      // connectionURL: "http://192.168.2.108:9000",
+      // connectionURL: "http://127.0.0.1:9000",
       // connectionURL: "https://dsbox02.isi.edu:9000",
       maxDocsNum: "",
       query: "",
@@ -124,7 +124,7 @@ class SearchPanel extends Component {
       result_json: {},
       loading: true,
       fileName: "No File Chosen",
-      supplied_data_mode: "Not chosen",
+      supplied_data_mode: "withoutData",
       showUploadButton: false,
       shownInputDatasetTextBox: false,
       shownInputFilepathTextBox: false,
@@ -368,7 +368,7 @@ class SearchPanel extends Component {
                 document.getElementById("searchMessage").innerHTML = " It seems the datamart backend is not working! Please check!";
               }
               else {
-                document.getElementById("searchMessage").innerHTML = error;
+                document.getElementById("searchMessage").innerHTML = "Request failed, please contact administrator.";
               }
               this.setState({
                 loading: false
@@ -542,6 +542,7 @@ class SearchPanel extends Component {
                   labelId="suppliedDataFormat"
                   id="suppliedDataFormat"
                   onChange={this._onChange.bind(this)}
+                  defaultValue="withoutData"
                 >
                   <MenuItem value="chose_from_local">local file (pkl/zip/csv)</MenuItem>
                   <MenuItem value="d3mDatasetID">d3m dataset id</MenuItem>
