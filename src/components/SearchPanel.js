@@ -132,6 +132,7 @@ class SearchPanel extends Component {
       showSearchMessage: false,
       onSearching: false,
       datasetID: "DA_poverty_estimation",
+      filepath: "https://raw.githubusercontent.com/usc-isi-i2/datamart-userend/d3m/example_datasets/sample_woreda_level_dataset.csv",
       keywords: "",
       variables: "",
       time_search_option: "augment_with_time_only",
@@ -279,9 +280,29 @@ class SearchPanel extends Component {
     
     // TODO: try and cache the error if detected
     var keywordsArray = this.state.keywords.split( /,| / )
+
+    if (this.state.variables === "") {
+      var variables_str = "{}";
+    }
+    else {
+      var variables_str = this.state.variables;
+    }
+    try {
+        JSON.parse(variables_str);
+    } 
+    catch (e) {
+      console.log("Parsing variables to json object eror!")
+      document.getElementById("searchMessage").innerHTML = "Invalid json format for given variable! Please check!";
+      this.setState(
+      {
+        loading: true,
+      });
+      return;
+    };
+
     const query = {
       keywords: keywordsArray,
-      variables: null,//JSON.parse(this.state.variables)
+      variables: JSON.parse(variables_str)
     }
     // TODO: how to deal with variables?
     console.log("query is", query);
@@ -320,6 +341,7 @@ class SearchPanel extends Component {
           // TODO: let the user know if search failed
           .then(response => {
             if (!response.ok) {
+              console.log("Not response ok!?");
               this.setState({
                 "loading": true,
 
@@ -354,7 +376,11 @@ class SearchPanel extends Component {
                 json.suppliedData = 
                   document.getElementById("suppliedData").files[0];
               };
-
+              console.log("json decoded return is ", json);
+              if (json['results'].length === 0) {
+                // raise information that nothing found
+                document.getElementById("searchMessage").innerHTML = " Nothing found. Please try some other search conditions";
+              };
               this.setState({
                 result_json: json,
                 loading: false
@@ -465,7 +491,7 @@ class SearchPanel extends Component {
                 onChange={this.handleValChange("variables")}
               />
               <MouseOverPopover 
-                helpContent1 = "currently giving variables for ISI datamart is useless"
+                helpContent1 = "variables that make detail constrains. Currently temporal variable search is available. For detail structures, please refer to REST API page."
               />
             </FormGroup>
 
@@ -594,10 +620,9 @@ class SearchPanel extends Component {
                     // style={{minWidth: 265}}
                     label="D3M Dataset ID"
                     placeholder="DA_poverty_estimation"
-                    defaultValue="DA_poverty_estimation"
                     id="datasetID"
                     className={classes.textField}
-                    // value={this.state.datasetID}
+                    value={this.state.datasetID}
                     margin="dense"
                     variant="outlined"
                     onKeyDown={this.keyPress}
@@ -614,7 +639,7 @@ class SearchPanel extends Component {
                     // style={{minWidth: 365}}
                     label="filepath"
                     placeholder="https://raw.githubusercontent.com/usc-isi-i2/datamart-upload/d3m/datamart_web/test_search_data.csv"
-                    id="maxDocs"
+                    id="filepath"
                     className={classes.textField}
                     value={this.state.filepath}
                     margin="dense"
