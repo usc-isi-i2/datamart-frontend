@@ -138,8 +138,8 @@ class ResultItem extends Component {
 
     this.state = {
       // connectionURL: "http://127.0.0.1:9000",
-      connectionURL: "http://10.108.20.4:9000",
-      // connectionURL: "https://dsbox02.isi.edu:9000",
+      // connectionURL: "http://10.108.20.4:9000",
+      connectionURL: "https://dsbox02.isi.edu:9005",
       index: 0,
       dmId: "",
       title: "",
@@ -151,6 +151,7 @@ class ResultItem extends Component {
       item_json: {},
       loading: false,
       cannotDownloadOrAugment: false,
+      cannotDownloadOriginal: false,
       btnText: "Augment",
       col_num: 0,
       suppliedData: null,
@@ -214,6 +215,13 @@ class ResultItem extends Component {
     if (this.props.item_json["augmentation"]['left_columns'].length === 0) {
       this.setState({
         cannotDownloadOrAugment: true,
+      })
+    };
+    const materilize_info = JSON.parse(this.props.item_json["materialize_info"]);
+    console.log("search type", materilize_info);
+    if (materilize_info["metadata"]["search_type"] !== "general" && materilize_info["metadata"]["search_type"] !== undefined) {
+      this.setState({
+        cannotDownloadOriginal: true,
       })
     };
   }
@@ -671,7 +679,7 @@ class ResultItem extends Component {
                   className={classes.buttonDownload}
                   onClick={this.handleDownloadOriginalData}
                   labelWidth="2000"
-                  disabled={this.state.running_download_original}
+                  disabled={this.state.running_download_original || this.state.cannotDownloadOriginal}
                 >
                   ORIGINAL DATA
                   <CloudDownloadIcon className={classes.rightIcon} />

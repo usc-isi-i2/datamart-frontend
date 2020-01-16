@@ -80,7 +80,6 @@ const styles = theme => ({
   textFieldNum: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 250
   },
 
   upload: {
@@ -112,9 +111,9 @@ class SearchPanel extends Component {
     super(props);
 
     this.state = {
-      connectionURL: "http://10.108.20.4:9000",
+      // connectionURL: "http://10.108.20.4:9000",
       // connectionURL: "http://127.0.0.1:9000",
-      // connectionURL: "https://dsbox02.isi.edu:9000",
+      connectionURL: "https://dsbox02.isi.edu:9005",
       maxDocsNum: "",
       query: "",
       // full_query: '{\n\t"dataset": {\n\t\t"about": "gold"\n\t}\n}',
@@ -497,7 +496,7 @@ class SearchPanel extends Component {
 
             <FormGroup row className={classes.row}>
               <TextField 
-                style={{minWidth: 265}}
+                style={{minWidth: 240}}
                 label="Max Return Docs Number"
                 placeholder="Default is 20"
                 id="maxDocs"
