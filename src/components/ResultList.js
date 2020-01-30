@@ -13,12 +13,12 @@ const styles = theme => ({
   container: {
     display: "flex",
     flexWrap: "wrap",
-    BorderTop: "2em"
+    BorderTop: "2em",
   },
 
   row: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
 
   root: {
