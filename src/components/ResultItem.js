@@ -166,8 +166,8 @@ class ResultItem extends Component {
       showMetadata: false,
       leftJoinPairs: "",
       rightJoinPairs: "",
-      leftJoinPairsNames: "",
-      rightJoinPairsNames: "",
+      // leftJoinPairsNames: "",
+      // rightJoinPairsNames: "",
       d3mMetadata: {},
       successAugment: false,
       successDownload: false,
@@ -210,8 +210,8 @@ class ResultItem extends Component {
       col_num: len,
       leftJoinPairs: JSON.stringify(this.props.item_json["augmentation"]['left_columns']),
       rightJoinPairs: JSON.stringify(this.props.item_json["augmentation"]['right_columns']),
-      leftJoinPairsNames: JSON.stringify(this.props.item_json["augmentation"]['left_columns_names']),
-      rightJoinPairsNames: JSON.stringify(this.props.item_json["augmentation"]['right_columns_names']),
+      // leftJoinPairsNames: JSON.stringify(this.props.item_json["augmentation"]['left_columns_names']),
+      // rightJoinPairsNames: JSON.stringify(this.props.item_json["augmentation"]['right_columns_names']),
       suppliedData: this.props.suppliedData,
       d3mMetadata: this.props.item_json["metadata"],
       csvResultFirst10Rows: this.props.item_json["sample"],
@@ -565,12 +565,6 @@ class ResultItem extends Component {
             </Typography>
             <Typography component="p">
               <b>Right Join pairs</b>: {this.state.rightJoinPairs}
-            </Typography>
-            <Typography component="p">
-              <b>Left Join names</b>: {this.state.leftJoinPairsNames}
-            </Typography>
-            <Typography component="p">
-              <b>Right Join names</b>: {this.state.rightJoinPairsNames}
             </Typography>
             <Typography component="p" className={classes.text}>
               <div>
