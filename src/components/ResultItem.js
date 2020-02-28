@@ -138,8 +138,8 @@ class ResultItem extends Component {
 
     this.state = {
       // connectionURL: "http://127.0.0.1:9000",
-      // connectionURL: "http://10.108.20.4:9000",
-      connectionURL: "https://dsbox02.isi.edu:9005",
+      connectionURL: "http://10.108.20.4:9000",
+      // connectionURL: "https://dsbox02.isi.edu:9000",
       index: 0,
       dmId: "",
       title: "",
