@@ -174,12 +174,12 @@ class ResultItem extends Component {
       csvResultAugment: null,
       csvResultDownload: null,
       csvResult: null,
-      csvResultFirst10Rows: "",
+      sampleData: "",
       running_augment_d3m : false,
       running_augment_csv : false,
       running_download_d3m : false,
       running_download_csv : false,
-      
+      fileType: ""
     };
     this.handleFirst10RowsBtn = this.handleFirst10RowsBtn.bind(this);
     this.handleMetaDataBtn = this.handleMetaDataBtn.bind(this);
@@ -214,9 +214,10 @@ class ResultItem extends Component {
       // rightJoinPairsNames: JSON.stringify(this.props.item_json["augmentation"]['right_columns_names']),
       suppliedData: this.props.suppliedData,
       d3mMetadata: this.props.item_json["metadata"],
-      csvResultFirst10Rows: this.props.item_json["sample"],
+      sampleData: this.props.item_json["sample"],
+      fileType: this.props.item_json["file_type"]
     });
-    if (this.props.item_json["augmentation"]['left_columns'].length === 0) {
+    if ((this.props.item_json["augmentation"]['left_columns'] ===  null) ||(this.props.item_json["augmentation"]['left_columns'].length === 0)){
       this.setState({
         cannotDownloadOrAugment: true,
       })
@@ -521,11 +522,11 @@ class ResultItem extends Component {
   };
 
   handleFirst10RowsBtn = () => {
-    if (this.state.csvResultFirst10Rows != "") {
+    if (this.state.sampleData != "") {
       console.log("Found first 10 rows data.");
       this.setState({
-        modalTitle: "First 10 rows data for " + this.state.title,
-        csvResult: this.state.csvResultFirst10Rows,
+        modalTitle: "Sample data for " + this.state.title,
+        csvResult: this.state.sampleData,
         loading: false,
         modalOpen: true,
         showMetadata: false,
