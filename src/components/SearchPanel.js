@@ -111,9 +111,9 @@ class SearchPanel extends Component {
     super(props);
 
     this.state = {
-      connectionURL: "http://10.108.20.4:9000",
+      // connectionURL: "http://10.108.20.4:9000",
       // connectionURL: "http://127.0.0.1:9000",
-      // connectionURL: "https://dsbox02.isi.edu:9000",
+      connectionURL: "https://dsbox02.isi.edu:9000",
       maxDocsNum: "",
       query: "",
       // full_query: '{\n\t"dataset": {\n\t\t"about": "gold"\n\t}\n}',
